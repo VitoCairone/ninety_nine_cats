@@ -1,0 +1,32 @@
+<h1>This is the page for <%= @cat.name %>!</h1>
+<p>Age: <%= @cat.age %></p>
+<p>Birth Date: <%= @cat.birth_date %></p>
+<p>Color: <%= @cat.color %></p>
+<p>Sex: <%= @cat.sex %></p>
+
+<% @cat.rental_requests.order("begin_date").each do |request| %>
+  Request ID: <%= request.id %><br>
+  Begin Date: <%= request.begin_date %><br>
+  End Date: <%= request.end_date %><br>
+  Status: <%= request.status %><br>
+
+  <% if request.status == 'undecided'%>
+  <form action="/cat_rental_requests/<%= request.id %>" method = 'post'>
+    <input type = 'hidden' value = 'put' name = '_method'>
+
+    <input type = 'radio' name = 'cat_rental_request[status]' value = 'approved' id = 'cat_rental_request_approved'>
+    <label for='cat_rental_request_approved'>Approve</label><br>
+
+    <input type = 'radio' name = 'cat_rental_request[status]' value = 'denied' id = 'cat_rental_request_denied'>
+    <label for='cat_rental_request_approved'>Deny</label>
+
+    <input type='submit' value='submit'>
+  </form>
+  <% end %>
+  <br><br>
+<% end %>
+
+<form action="/cats/<%= @cat.id %>" method="POST">
+  <input type="hidden" value="DELETE" name="_method">
+  <input type="submit" value="delete this cat">
+</form>

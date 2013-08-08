@@ -1,0 +1,49 @@
+<form action="/cats/<%= @cat.id %>" method = "post">
+
+  <!-- Note: Take out spaces around = in HTML -->
+
+  <input type="hidden" value="PUT" name="_method">
+  <label for="cat_name">Name</label>
+  <input type = "text"
+    name="cat[name]"
+    value="<%= @cat.name %>"
+    id = "cat_name">
+  <br>
+
+  <label for="cat_birth_date">Date of birth</label>
+  <input type = "date" name = "cat[birth_date]" value = "<%= @cat.birth_date %>" id = "cat_birth_date">
+  <br>
+
+  <label for="cat_color">Color</label>
+  <select name = "cat[color]" id = "cat_color">
+    <% color_list = ["brown", "black", "white", "orange"] %>
+    <% color_list.each do |color| %>
+    <option
+      value=<%= color %>
+      <%= selected="selected" if color == @cat.color %>
+
+    > <%= color.capitalize%>
+    </option>
+    <% end %>
+  </select>
+  <br>
+
+  <label for="cat_age">Age</label>
+  <input type = "text" name = "cat[age]" id = "cat_age" value = "<%= @cat.age %>">
+  <br>
+
+  <label for="cat_sex">Sex</label>
+  <select name = "cat[sex]" id = "cat_sex">
+    <option
+      value="male"
+      <%= selected="selected" if "male" == @cat.sex %>
+    >Male</option>
+    <option
+      value="female"
+      <%= selected="selected" if "female" == @cat.sex %>
+    >Female</option>
+  </select>
+  <br>
+
+  <input type = "submit" value = "update this cat">
+</form>

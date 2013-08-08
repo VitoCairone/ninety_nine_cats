@@ -1,0 +1,31 @@
+<form action="/cats" method = "post">
+  <label for="cat_name">Name</label>
+  <input type = "text" name = "cat[name]" id = "cat_name">
+  <br>
+
+  <label for="cat_birth_date">Date of birth</label>
+  <input type = "date" name = "cat[birth_date]" id = "cat_birth_date">
+  <br>
+
+  <label for="cat_color">Color</label>
+  <select name = "cat[color]" id = "cat_color">
+    <option value="brown">Brown</option>
+    <option value="black">Black</option>
+    <option value="white">White</option>
+    <option value="orange">Orange</option>
+  </select>
+  <br>
+
+  <label for="cat_age">Age</label>
+  <input type = "text" name = "cat[age]" id = "cat_age">
+  <br>
+
+  <label for="cat_sex">Sex</label>
+  <select name = "cat[sex]" id = "cat_sex">
+    <option value="male">Male</option>
+    <option value="female">Female</option>
+  </select>
+  <br>
+
+  <input type = "submit" value = "make a cat">
+</form>
