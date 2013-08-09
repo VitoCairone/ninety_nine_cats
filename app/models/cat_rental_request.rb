@@ -1,11 +1,16 @@
 #require_relative 'cat.rb'
 
 class CatRentalRequest < ActiveRecord::Base
-  attr_accessible :cat_id, :begin_date, :end_date, :status
+  attr_accessible :cat_id, :begin_date, :end_date, :status, :user_id
 
   belongs_to :cat,
   :class_name => "Cat",
   :foreign_key => :cat_id,
+  :primary_key => :id
+
+  belongs_to :user,
+  :class_name => "User",
+  :foreign_key => :user_id,
   :primary_key => :id
 
   validate :dates_must_be_ordered

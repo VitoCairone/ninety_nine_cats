@@ -1,4 +1,6 @@
 class CatRentalRequestsController < ApplicationController
+  before_filter :ensure_logged_in
+
   def index
     @cat_rental_request = CatRentalRequest.all
     render :index

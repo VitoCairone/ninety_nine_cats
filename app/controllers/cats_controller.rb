@@ -1,10 +1,13 @@
 class CatsController < ApplicationController
+  before_filter :ensure_logged_in
+
   def index
     @cats = Cat.all
     render :index
   end
 
   def show
+    @user = current_user
     @cat = Cat.find_by_id(params[:id])
     render :show
   end
@@ -14,14 +17,13 @@ class CatsController < ApplicationController
   end
 
   def create
+    params[:cat][:owner_id] = 3
     c = Cat.create!(params[:cat])
 
     redirect_to cat_url(c)
   end
 
   def edit
-
-    puts "@@@@@@@@@@@ This is the edit controller!"
 
     @cat = Cat.find(params[:id])
 
@@ -32,9 +34,14 @@ class CatsController < ApplicationController
 
   def update
 
-    puts "@@@@@@@@@@@@@@ This is the update controller!"
-
     c = Cat.find(params[:id])
+    unless c.owner == current_user
+      flash[:notices] ||= []
+      flash[:notices] << "You do not own this cat."
+      redirect_to cat_url(c)
+      return
+    end
+
     puts "Cat is #{c} with id #{c.id}"
     puts "params are #{params}"
     c.update_attributes(params[:cat])

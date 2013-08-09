@@ -1,3 +1,7 @@
+<% if flash[:notices] %>
+<h2><%= flash[:notices].first %></h2>
+<% end %>
+
 <h1>This is the page for <%= @cat.name %>!</h1>
 <p>Age: <%= @cat.age %></p>
 <p>Birth Date: <%= @cat.birth_date %></p>
@@ -10,15 +14,16 @@
   End Date: <%= request.end_date %><br>
   Status: <%= request.status %><br>
 
-  <% if request.status == 'undecided'%>
+  <% if request.status == 'undecided' && @cat.owner == @user %>
   <form action="/cat_rental_requests/<%= request.id %>" method = 'post'>
+    <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
     <input type = 'hidden' value = 'put' name = '_method'>
 
     <input type = 'radio' name = 'cat_rental_request[status]' value = 'approved' id = 'cat_rental_request_approved'>
     <label for='cat_rental_request_approved'>Approve</label><br>
 
     <input type = 'radio' name = 'cat_rental_request[status]' value = 'denied' id = 'cat_rental_request_denied'>
-    <label for='cat_rental_request_approved'>Deny</label>
+    <label for='cat_rental_request_approved'>Deny</label><br>
 
     <input type='submit' value='submit'>
   </form>
@@ -26,7 +31,10 @@
   <br><br>
 <% end %>
 
+<% if @cat.owner == @user %>
 <form action="/cats/<%= @cat.id %>" method="POST">
+  <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
   <input type="hidden" value="DELETE" name="_method">
   <input type="submit" value="delete this cat">
 </form>
+<% end %>
