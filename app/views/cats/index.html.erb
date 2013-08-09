@@ -1,5 +1,5 @@
 <h2>This is the cats page.</h2>
 <% @cats.each do |cat| %>
-<%= cat.name %>
+<%= link_to cat.name, cat_url(cat) %>
 <br>
 <% end %>

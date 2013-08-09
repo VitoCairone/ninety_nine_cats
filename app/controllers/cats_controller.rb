@@ -52,9 +52,16 @@ class CatsController < ApplicationController
   end
 
   def destroy
-    Cat.find(params[:id]).destroy
+    cat = Cat.find(params[:id])
 
-    render :text => "You are a terrible person and should feel bad"
+    if cat.owner == current_user
+      cat.destroy
+      render :text => "You are a terrible person and should feel bad"
+    else
+      render :text => "Don't delete other people's cats!"
+      # penalty_cat = current_user.cats.first
+      # penalty_cat.destroy
+    end
   end
 end
 
